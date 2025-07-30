@@ -38,16 +38,7 @@ namespace ORM_Dapper
             }
 
            var repos = new DapperProductRepository(conn);
-           // Console.WriteLine("What is the name of your new product?");
-           // var prodName = Console.ReadLine();
-
-           // Console.WriteLine("What is the price?");
-           // var prodPrice = double.Parse(Console.ReadLine());
-
-          //  Console.WriteLine("What is the category ID");
-           // var prodCar = int.Parse(Console.ReadLine());
-
-           // repos.CreateProduct(prodName, prodPrice, prodCar);
+          
             var prodList = repos.GetAllProducts();
 
             if (input == 2)
@@ -56,6 +47,25 @@ namespace ORM_Dapper
                 {
                     Console.WriteLine($"{prod.ProductID} - {prod.Name}");
                     
+                }
+
+                Console.WriteLine("Would you like to:");
+                Console.WriteLine("1 - Update Product?");
+                Console.WriteLine("2- Delete Product?");
+                var answer = Convert.ToInt32(Console.ReadLine());
+                if (answer == 1)
+                {
+                    Console.WriteLine("What is the Product ID you would like to update?");
+                    var prodID = int.Parse(Console.ReadLine());
+                    Console.WriteLine("What is the new Product name?");
+                    var newName = Console.ReadLine();
+                    repos.UpdateProduct(prodID, newName);
+                }
+                if (answer == 2)
+                {
+                    Console.WriteLine("What is the Product ID you would like to delete?");
+                    var prodID = int.Parse(Console.ReadLine());
+                    repos.DeleteProduct(prodID);
                 }
             }
           

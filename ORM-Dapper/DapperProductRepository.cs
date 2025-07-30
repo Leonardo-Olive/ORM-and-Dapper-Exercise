@@ -20,9 +20,25 @@ namespace ORM_Dapper
                 new {name = name, price = price, categoryID = categoryID});
         }
 
+        public void DeleteProduct(int productID)
+        {
+            _connection.Execute("DELETE FROM products WHERE ProductID =  @productID;",
+                new { productID = productID });
+            _connection.Execute("DELETE FROM sales WHERE ProductID =  @productID;",
+                new { productID = productID });
+            _connection.Execute("DELETE FROM reviews WHERE ProductID =  @productID;",
+                new { productID = productID });
+        }
+
         public IEnumerable<Product> GetAllProducts()
         {
             return _connection.Query<Product>("SELECT * FROM products;");
+        }
+
+        public void UpdateProduct(int productID, string updatedName)
+        {
+            _connection.Execute("UPDATE products SET Name = @updatedName WHERE productID = @productID;",
+                 new { productID = productID, updatedName = updatedName });
         }
     }
 }
